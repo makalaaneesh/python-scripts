@@ -15,6 +15,7 @@ for x in range(7,27):
 	time2=time1
 	try:
 		r=requests.get("http://"+url, proxies=proxies, timeout=5)
+		# r=requests.get("https://stream.twitter.com/1.1/statuses/filter.json?track=kejriwal", proxies=proxies, timeout=5)
 		time2 = time.time()
 
 	except requests.exceptions.ConnectTimeout as e:
@@ -29,7 +30,7 @@ for x in range(7,27):
 			# x[a]=str(time2-time1)
 			print a+"-Working"+"in seconds-"+str(time2-time1)
 		else:
-			print a+"-Not Working"
+			print a+"-Not Working", r.status_code
 
 
 print"---------------------------------------"
