@@ -34,23 +34,26 @@ class graph:
 		for key in self.graph_dict.keys():
 			print key, '->', self.graph_dict[key]
 
-	def dfs(self,s):
-		print s,","
+	def dfs(self,s,l):
+		# print s,","
+		l.append(s)
 		self.visited.append(s)
 		for value in self.graph_dict[s]:
 			if value not in self.visited:
-				self.dfs(value)
+				self.dfs(value,l)
+		return l
 
 
 if __name__ =='__main__':
 	fd= graph()
-	# fd.prepare()
-	fd.create()
+	fd.prepare()
+	# fd.create()
 	fd.print_graph()
 	print "\n"
 	for key in fd.graph_dict.keys():
 		print "closure of",key,"is--------------"
-		fd.dfs(key)
+		l=fd.dfs(key,[])
+		print l
 		fd.visited=[]
 		print "---------------------------------"
 
