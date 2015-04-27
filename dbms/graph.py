@@ -34,7 +34,7 @@ class graph:
 			p = itertools.combinations(attrs,i)
 			for permutation in p:
 				possible_key = " ".join(permutation)
-				if len(self.closure(possible_key)) == no_of_keys:
+				if len(self.closure2(possible_key)) == no_of_keys:
 					keys.append("".join(possible_key.split()))
 				
 		print "keys are ", keys
@@ -76,10 +76,31 @@ class graph:
 			return temp
 		else:
 			self.depth_first_search(vertex)
-			# print self.visited
+			print self.visited
 			temp=self.visited
 			self.visited = []
 			return temp
+	# closure2 is the improved function that supports closure of an attribute or a set of attributes
+	def closure2(self,vertex):
+		self.visited = []
+		for attr in vertex.split():
+			self.depth_first_search(attr)
+		added = True
+		while(True):
+			added = False
+			for key in self.graph_dict.keys():
+				if self.has_multiple_attributes(key) and set(key.split()).issubset(set(self.visited)):
+					# print "enterd"
+					v_count =len(self.visited)
+					self.depth_first_search(key)
+					if len(self.visited) > v_count:
+						added = True
+			if not added:
+				break
+		temp = filter(lambda x: not self.has_multiple_attributes(x) ,list(set(self.visited))) 
+		self.visited = []
+		# print temp
+		return temp	
 
 class decomposed_graph(graph):
 	def gen_decomposed_graph(self, g_d):

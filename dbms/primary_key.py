@@ -16,5 +16,5 @@ graph_dict ={
 g = graph()
 g.set_graph(graph_dict)
 g.print_graph()
+
 g.keys()
-# g.closure('b c')
