@@ -1,4 +1,4 @@
-
+import itertools
 class graph:
 	"""A class to implement algorithms pertaining to dbms"""
 	graph_dict = {}
@@ -26,6 +26,20 @@ class graph:
 			print key," : ", value	
 		print '......................................\n'
 
+	def keys(self):
+		keys = []
+		attrs = [x for x in self.graph_dict.keys() if not self.has_multiple_attributes(x)]
+		no_of_keys = len(attrs)
+		for i in range(1,no_of_keys):
+			p = itertools.combinations(attrs,i)
+			for permutation in p:
+				possible_key = " ".join(permutation)
+				if len(self.closure(possible_key)) == no_of_keys:
+					keys.append("".join(possible_key.split()))
+				
+		print "keys are ", keys
+		print "primary key is ", keys[0]
+
 	def depth_first_search(self, vertex):
 		if vertex in self.visited:
 			return
@@ -36,9 +50,12 @@ class graph:
 				self.depth_first_search(edge)
 
 	def closure(self, vertex):
-		print "\nClosure of ",vertex,":"
+		# print "\nClosure of ",vertex,":"
 		self.visited = []
-		if self.has_multiple_attributes(vertex) and vertex not in self.graph_dict.keys():
+		if self.has_multiple_attributes(vertex):
+			if vertex in self.graph_dict.keys():
+				self.depth_first_search(vertex)
+			# print 'multiple'
 			for attr in vertex.split():
 				self.depth_first_search(attr)
 			added = True
@@ -55,14 +72,14 @@ class graph:
 					break
 			temp = filter(lambda x: not self.has_multiple_attributes(x) ,list(set(self.visited))) 
 			self.visited = []
-			print temp
+			# print temp
 			return temp
-
-		self.depth_first_search(vertex)
-		print self.visited
-		temp=self.visited
-		self.visited = []
-		return temp
+		else:
+			self.depth_first_search(vertex)
+			# print self.visited
+			temp=self.visited
+			self.visited = []
+			return temp
 
 class decomposed_graph(graph):
 	def gen_decomposed_graph(self, g_d):
@@ -80,7 +97,7 @@ class decomposed_graph(graph):
 		# 		self.graph_dict[key] = [item for item in g_d.graph_dict[key] if item in vertices]
 		import itertools
 		for i in range(1, len(vertices)+1):
-			p = itertools.permutations(set(vertices),i)
+			p = itertools.combinations(set(vertices),i)
 			p_list = list(p)
 			for item in p_list:
 				attr= " ".join(sorted(item))
