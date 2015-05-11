@@ -36,7 +36,6 @@ class graph:
 				possible_key = " ".join(permutation)
 				if len(self.closure2(possible_key)) == no_of_keys:
 					keys.append("".join(possible_key.split()))
-				
 		print "keys are ", keys
 		print "primary key is ", keys[0]
 
