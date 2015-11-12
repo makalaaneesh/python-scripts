@@ -6,7 +6,7 @@
 # 
 
 cd
-cd Friends\ Complete\ Seasons\ 1-10\ Uncut\ DVDRip\ -\ 480p
+cd Desktop/Friends\ Complete\ Seasons\ 1-10\ Uncut\ DVDRip\ -\ 480p
 
 echo -n "Enter keyword for Friends episode "
 read text
