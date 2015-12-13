@@ -7,6 +7,7 @@ import requests
 from xml.dom import minidom
 from bs4 import BeautifulSoup
 import sys
+import easygui
 
 def getXML(track, artist):
 	url = "http://lyrics.wikia.com/api.php?action=lyrics&artist="+artist+"&song="+track+"&fmt=xml"
@@ -45,5 +46,6 @@ if __name__ == "__main__":
 		url = getURL(xml)
 		lyrics = getLyrics(url)
 		print lyrics
+		easygui.textbox(track+" "+artist,track+" "+artist,lyrics)
 	else:
 		print "IMPROPER TAGS"

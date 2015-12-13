@@ -6,4 +6,5 @@
 artist=$(mp3info -p %a "$1")
 title=$(mp3info -p %t "$1")
 echo "aritst is $artist and title is $title"
-python lyrics.py "$title" "|" "$artist"
+vlc -vvv "$1"&
+python lyrics.py "$title" "|" "$artist" 
