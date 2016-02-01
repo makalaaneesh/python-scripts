@@ -2,6 +2,7 @@ from datetime import datetime
 import time
 import requests
 import threading
+import json
 
 
 class ProxyChecker(threading.Thread):
@@ -17,7 +18,7 @@ class ProxyChecker(threading.Thread):
 		}
 
 	def run(self):
-		a="port: "+self.port+" "+ self.address+"|"
+		a="port:"+self.port+" "+ self.address
 		time1 = time.time()
 		time2=time1
 		try:
@@ -62,7 +63,7 @@ def get_proxy_times(sub_ip_list, port_list, start, end, url):
 	print"---------------------------------------"
 
 	for item in sorted(l.keys()):
-		to_return[l[item][:-1]] = item
+		to_return[l[item]] = item
 		print l[item]+"-   "+str(item)
 	return to_return
 
@@ -74,4 +75,5 @@ if __name__ == "__main__":
 	end = 27
 	url=raw_input("enter the url to check which on which proxies this website will run\n")
 	result = get_proxy_times(ipl, ports, start,end, url)
-	print result
+	with open('proxies.txt', 'w') as outfile:
+		json.dump(result, outfile)
